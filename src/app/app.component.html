@@ -1,0 +1,147 @@
+
+<div style="text-align:center">
+  <h1>Welcome to {{ title }}!</h1>
+</div>
+<div class="row">
+<div id="registration" class="container col-md-6">
+ 
+  <form  [formGroup]="registrationForm" (ngSubmit)="onSubmit(_trainnerservice.currentTrainner)">
+
+    <mat-horizontal-stepper >
+      <mat-step  [stepControl]="personal_details">
+        <ng-template matStepLabel>Enter Personal Details</ng-template>
+        <div class="jumbotron" formGroupName="personal_details">
+          <div formGroupName="name">
+            <div class="form-group">
+              <label>First Name : </label>
+              <input type="text"  formControlName="first_name" class="form-control"  >
+            </div>
+            <div class="form-group">
+              <label>Last Name : </label>
+              <input type="text" formControlName="last_name" class="form-control">
+            </div>
+          </div>    
+          <div class="form-group">
+            <label>DOB : </label>
+            <input type="date" formControlName="dob" class="form-control" >
+          </div>
+          <div class="form-group">
+            <label>About Yourself : </label>
+            <textarea formControlName="about_yourself" class="form-control" ></textarea>
+          </div>       
+          <div class="form-group">
+            <label>Language(s) : </label>
+            <button type="button" class="btn btn-secondary btn-sm m-2" (click)="addLanguage()">Add Language</button>
+            <!-- <input type="text" formControlName="lang" class="form-control" [{ngModal}]=""> -->
+            <div formArrayName="languages_known" *ngIf="getLangsform()">
+              <div *ngFor="let lang of getLangsform().controls; let i =index;">
+                <input type="text" class="form-control" [formControlName]="i"><br>
+              </div>
+            </div>
+          </div>          
+          <div class="form-group ">
+            <label>Willingly to travel : </label>
+            <input type="radio" formControlName="willingly_to_travel" name="willingly_to_travel" value="yes" class="form-control">
+            <label>Yes </label>
+            <input type="radio" formControlName="willingly_to_travel" name="willingly_to_travel" value="no" class="form-control" >
+            <label>No</label>
+          </div>
+        </div>
+        <br/>
+        <button type="button" matStepperNext >Next</button>
+      </mat-step>
+
+      <mat-step [stepControl]="technologies">
+        <ng-template matStepLabel>Enter Technologies</ng-template>
+        <div formArrayName="technologies" *ngFor="let technologies of registrationForm.get('technologies').controls; let i = index">
+            <div class="jumbotron" formGroupName={{i}}>
+                <div class="form-group">
+                  <label>Name : </label>
+                  <input type="text"  formControlName="name" class="form-control"  >
+                </div>
+              
+                <div class="form-group">
+                  <label>Experience : </label>
+                  <input type="text" formControlName="experience" class="form-control">
+                </div>
+               
+            <div class="form-group">
+                <label>Ratings: </label>
+                <input type="text" formControlName="ratings" class="form-control" >
+              </div>
+            <div formGroupName="costing">
+              <div class="form-group">
+                <label>Freshers : </label>
+                <input type="text" formControlName="freshers" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Laterals : </label>
+                <input type="text" formControlName="laterals" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Project Specific : </label>
+                <input type="text" formControlName="project_specific" class="form-control">
+              </div>
+            </div>          
+              <div class="form-group ">
+                  <label>Work_as_Consultant : </label>
+  
+                  <input type="radio" formControlName="work_as_consultant" name="work_as_consultant" value="yes" class="form-control">
+                  <label>Yes </label>
+                  <input type="radio" formControlName="work_as_consultant" name="work_as_consultant" value="no" class="form-control">
+                  <label>No</label>
+              </div>
+        </div>
+        </div>
+        <div class="form-group" >
+          <div class="col-md-offset-2 col-md-4">
+            <button type="button" class="btn btn-primary" (click)= "addTechnologies()">Add Technologies</button>
+          </div>
+        </div>      
+      <br/>
+      <button type="button" matStepperNext >Next</button>
+      
+      </mat-step>
+
+      <mat-step [stepControl]="certifications">
+        <ng-template matStepLabel>Enter Certification</ng-template>
+        <div formArrayName="certifications" *ngFor="let certification of registrationForm.get('certifications').controls; let i = index">
+        <div class="jumbotron" formGroupName={{i}}>
+          <div class="form-group">
+            <label>Title : </label>
+            <input type="text"  formControlName="title" class="form-control" >
+          </div>
+          <div class="form-group">
+            <label>Year : </label>
+            <input type="text" formControlName="Year" class="form-control" >
+          </div>
+        </div>
+        </div>
+        <div class="form-group" >
+          <div class="col-md-offset-2 col-md-4">
+            <button type="button" class="btn btn-primary" (click)= "addcertification()">Add Certification</button>
+          </div>
+        </div>     
+        <br/>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
+</div>
+
+<div class="container col-md-6">
+  <h4 class="display-5 text-center">Trainners Detailed List</h4>
+  <table class="table table-hover">
+   <tr *ngFor="let trainner of _trainnerservice.allTrainner">
+        <td><a class="btn text-danger" (click)="editTrainner(trainner)"><i class="fa fa-edit"></i></a></td>
+        <td>{{trainner._id}}</td>
+        <td>{{trainner.personal_details.name.first_name}}</td>
+        <td>{{trainner.personal_details.name.last_name}}</td>
+        <td>{{trainner.personal_details.dob}}</td>
+        <td>{{trainner.personal_details.about_yourself}}</td>
+        <td>{{trainner.personal_details.willingly_to_travel}}</td>
+       
+    </tr> 
+  </table>
+
+</div>
