@@ -15,6 +15,35 @@ export class AppComponent implements OnInit {
   title = 'Trainner Registration Form ';
   registrationForm: FormGroup;
   allTrainner: Trainner[];
+
+  data = {
+	"trainer_id": "t001",
+	"personal_details": {
+		"name": {
+			"first_name": "Naveen",
+			"last_name": "Kumar"
+		},
+		"dob": "1990-12-20",
+		"about_yourself": "i am a corporate trainer from 10 years",
+		"languages_known": ["Kannada", "English", "Tamil"],
+		"willing_to_travel": "yes"
+	},
+	"technologies": [{
+		"name": "Angular 2",
+		"experience": 4,
+		"ratings": 7.9,
+		"costing": {
+			"freshers": 8000,
+			"laterals": 12000,
+			"project_specific": 15000
+		},
+		"work_as_consultant": "yes"
+	}],
+	"certifications": [{
+		"title": "Sun Certified",
+		"Year": 1999
+	}],
+};
   
 
 
@@ -49,7 +78,8 @@ export class AppComponent implements OnInit {
         this.addCertificate()
       ]),
     });
-    this.getAllTrainners();
+    // this.getAllTrainners();
+    this.editTrainner();
   }
 
   addTechnologies(): void {
@@ -102,8 +132,8 @@ export class AppComponent implements OnInit {
 
 
 
-  editTrainner(trainner: Trainner) {
-    this._trainnerservice.currentTrainner = Object.assign({}, trainner);
+  editTrainner() {
+    this._trainnerservice.currentTrainner = this.data;
     this.registrationForm.patchValue({
           personal_details: { type: Object,
             name: { type: Object,
@@ -112,15 +142,15 @@ export class AppComponent implements OnInit {
             },
             dob: this._trainnerservice.currentTrainner.personal_details.dob,
             about_yourself: this._trainnerservice.currentTrainner.personal_details.about_yourself,
-            languages_known: this.fb.array([this.addlanguages_known()]),
             willingly_to_travel: this._trainnerservice.currentTrainner.personal_details.willingly_to_travel
         }
     });
+    this.addlanguages_known();
   }
   addlanguages_known(): any {
-    const control = this.registrationForm.get('languages_known') as FormArray;
+    const control = this.registrationForm.get('personal_details.languages_known') as FormArray;
     this._trainnerservice.currentTrainner.personal_details.languages_known.forEach(x => {
-        control.push(this.fb.control(''));
+        control.push(this.fb.control(x));
       });
   }
 }
