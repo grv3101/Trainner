@@ -112,9 +112,15 @@ export class AppComponent implements OnInit {
             },
             dob: this._trainnerservice.currentTrainner.personal_details.dob,
             about_yourself: this._trainnerservice.currentTrainner.personal_details.about_yourself,
-            languages_known: ['Hindi', 'English'],
+            languages_known: this.fb.array([this.addlanguages_known()]),
             willingly_to_travel: this._trainnerservice.currentTrainner.personal_details.willingly_to_travel
         }
     });
+  }
+  addlanguages_known(): any {
+    const control = this.registrationForm.get('languages_known') as FormArray;
+    this._trainnerservice.currentTrainner.personal_details.languages_known.forEach(x => {
+        control.push(this.fb.control(''));
+      });
   }
 }
