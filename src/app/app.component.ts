@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 	"trainer_id": "t001",
 	"personal_details": {
 		"name": {
-			"first_name": "Naveen",
+			"first_name": "ABC",
 			"last_name": "Kumar"
 		},
 		"dob": "1990-12-20",
@@ -38,7 +38,19 @@ export class AppComponent implements OnInit {
 			"project_specific": 15000
 		},
 		"work_as_consultant": "yes"
-	}],
+	},
+  {
+		"name": "Java",
+		"experience": 5,
+		"ratings": 8,
+		"costing": {
+			"freshers": 8000,
+			"laterals": 12000,
+			"project_specific": 15000
+		},
+		"work_as_consultant": "yes"
+	}
+  ],
 	"certifications": [{
 		"title": "Sun Certified",
 		"Year": 1999
@@ -146,7 +158,12 @@ export class AppComponent implements OnInit {
         }
     });
     this.addlanguages_known();
-    this.addtechs();
+    this.registrationForm.patchValue({
+  technologies: this._trainnerservice.currentTrainner.technologies
+});
+  this.registrationForm.patchValue({
+  certifications: this._trainnerservice.currentTrainner.certifications
+});
   }
   addlanguages_known(): any {
     const control = this.registrationForm.get('personal_details.languages_known') as FormArray;
@@ -155,9 +172,4 @@ export class AppComponent implements OnInit {
       });
   }
 
-   addtechs(): any {
-  this.registrationForm.patchValue({
-  technologies: this._trainnerservice.currentTrainner.technologies
-});
-   }
 }
