@@ -158,6 +158,14 @@ export class AppComponent implements OnInit {
         }
     });
     this.addlanguages_known();
+    
+    this._trainnerservice.currentTrainner.technologies.forEach(x => {
+      this.addTechnologies();
+    });
+    this.registrationForm.patchValue({
+      technologies: this._trainnerservice.currentTrainner.certifications
+    });
+       
     this.registrationForm.patchValue({
   technologies: this._trainnerservice.currentTrainner.technologies
 });
