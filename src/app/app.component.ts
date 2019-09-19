@@ -146,6 +146,7 @@ export class AppComponent implements OnInit {
         }
     });
     this.addlanguages_known();
+    this.addtechs();
   }
   addlanguages_known(): any {
     const control = this.registrationForm.get('personal_details.languages_known') as FormArray;
@@ -153,4 +154,10 @@ export class AppComponent implements OnInit {
         control.push(this.fb.control(x));
       });
   }
+
+   addtechs(): any {
+  this.registrationForm.patchValue({
+  technologies: this._trainnerservice.currentTrainner.technologies
+});
+   }
 }
