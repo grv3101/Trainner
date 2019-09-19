@@ -1,0 +1,28 @@
+{
+	"trainer_id": "t001",
+	"personal_details": {
+		"name": {
+			"first_name": "Naveen",
+			"last_name": "Kumar"
+		},
+		"dob": "1990-12-20",
+		"about_yourself": "i am a corporate trainer from 10 years",
+		"languages_known": ["Kannada", "English", "Tamil"],
+		"willing_to_travel": "yes"
+	},
+	"technologies": [{
+		"name": "Angular 2",
+		"experience": 4,
+		"ratings": 7.9,
+		"costing": {
+			"freshers": 8000,
+			"laterals": 12000,
+			"project_specific": 15000
+		},
+		"work_as_consultant": "yes"
+	}],
+	"certifications": [{
+		"title": "Sun Certified",
+		"Year": 1999
+	}],
+}
